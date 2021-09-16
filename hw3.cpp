@@ -84,7 +84,7 @@ int hw3() {
 	char ch1,ch2;
 
 	//cin >> text;
-	text = "2.52.2568   -2-1hhhh1hhhhh---222hhhh3hhh+-3.5 hhhh hh hh hh hh h4 hhhh hh h h h\nasd\n5\n6\n7 1....2..-3";
+	text = "1 -1 +1 2.5 -2.5 +2.5 +-+-2.5 .2 2. 2..2";
 
 	if (f41.is_open()) {
 		f41 << text;
@@ -101,13 +101,13 @@ int hw3() {
 				if ((isdigit(ch1) != 0) && (ch2 == '.')) {
 					char temp = ch1;
 					ch1 = f42.get();
+					fl = 1;
 					if (isdigit(ch1) != 0) {
 						cout << temp << ch2;
 						while (isdigit(ch1) != 0) {
 							cout << ch1;
 							ch1 = f42.get();
 						}
-						fl = 1;
 						cout << endl;
 					}
 				}
@@ -119,7 +119,9 @@ int hw3() {
 						while (isdigit(ch1) != 0) {
 							cout << ch1;
 							ch1 = f42.get();
+							if () //proverka na tocku!!!!!
 						}
+						cout << endl;
 					}
 				}
 				else if (isdigit(ch2) != 0) {
