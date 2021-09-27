@@ -8,6 +8,7 @@
 using namespace std;
 
 int hw3() {
+	/*
 	cout << "hw3" << endl;
 	//1
 	double S, p, n, m, r, x = 0;
@@ -21,7 +22,7 @@ int hw3() {
 		cout << "error. try again." << endl;
 		hw3();
 	}
-	if (12 * (x - 1) != 0) {
+	if (12 * (x - 1) > 0) {
 		m = (S * r * x) / (12 * (x - 1));
 		cout << "ans: " << m << endl;
 	}
@@ -29,16 +30,16 @@ int hw3() {
 		cout << "error. m < 0, try again" << endl;
 		hw3();
 	}
-	cout << r << endl;
 
 	//2
-	cout << "2) " << endl;
+	cout << "2) write S, m, n" << endl;
+	S = getDouble();
+	m = getDouble();
+	n = getDouble();
 	double r2 = 0.001;
 	while (true) {
 		x = pow((1 + r2), n);
-		//if ((pow(1 + r2, n) == ((12 * m) / (12 * m - (S * r2)))) && r2==r) {
-		//cout << ((S * r2 * pow((1 + r2), n)) == (m * 12 * (pow((1 + r2), n) - 1))) << endl;
-		if (((S * r2 * x) == (m * 12 * (x - 1))) && r2 == r) { //why not working
+		if ( ((S * r2 * x) == (m * 12 * (x - 1))) ) {
 			cout << "p: " << 100 * r2 << endl;
 			break;
 		}
@@ -50,12 +51,12 @@ int hw3() {
 	}
 	
 	//3
-	cout << "3) write text in file" << endl; //create + ввод с клавиатуры
+	cout << "3) write text in file" << endl;
 	ofstream f31;
 	ifstream f32;
 	string text;
 
-	f31.open("hw3_copy.txt");//, fstream::in | fstream::out); 
+	f31.open("hw3_copy.txt");
 	
 	//cin >> text;
 	text = "hi from 3_3";
@@ -69,22 +70,23 @@ int hw3() {
 	if (f32.is_open()) {
 		while (!f32.eof()) {
 			f32 >> text;
-			cout << text << " "; //вывод
+			cout << text << " ";
 		}
 		cout << endl;
 		f32.close();
 	}
-	
-
+	*/
+	string text = "";
 	//4
-	cout << "4) write numbers in file " << endl; //ввод с клав! всего файла
+	cout << "4) write numbers in file " << endl;
 	ofstream f41;
 	ifstream f42;
 	f41.open("hw3_filter.txt");
 	char ch1,ch2;
 
 	//cin >> text;
-	text = "1 -1 +1 2.5 -2.5 +2.5 +-+-2.5 .2 2. 2..2";
+	text = "-222.5   ";
+	text = "abc-33 3 -3 sasa-asasa-sas3sasa-3 --3 ------3 3-3 3s-s-3";
 
 	if (f41.is_open()) {
 		f41 << text;
@@ -96,9 +98,9 @@ int hw3() {
 	if (f42.is_open()) {
 		while (!f42.eof()) {
 			fl==1?fl=0:ch1 = f42.get();
-			if ((isdigit(ch1) != 0) || (ch1=='-')) {
-				ch2 = f42.get();
-				if ((isdigit(ch1) != 0) && (ch2 == '.')) {
+			if ((isdigit(ch1) != 0) || (ch1=='-')) { //если 1 число или минус
+				ch2 = f42.get(); //берем второе
+				if ((isdigit(ch1) != 0) && (ch2 == '.')) { //если 1 число » 2 точка
 					char temp = ch1;
 					ch1 = f42.get();
 					fl = 1;
@@ -111,25 +113,35 @@ int hw3() {
 						cout << endl;
 					}
 				}
-				else if (ch1 == '-') {
-					if (isdigit(ch2) != 0) {
+				else if (ch1 == '-') { //если 1 минус
+					ch2 = f42.get(); //берем второе
+					//cout << endl << "test: " << ch1 << " " << ch2 << endl;
+					if (isdigit(ch2) != 0) { //если второе число
 						cout << ch1 << ch2;
-						ch1 = f42.get();
+						ch1 = f42.get(); //не выводит -33 вторую 3 !!!
 						fl = 1;
 						while (isdigit(ch1) != 0) {
 							cout << ch1;
+							if (ch1 == '.') { //proverka na tocku!!!!!
+								cout << "we are here" << endl;
+							}
 							ch1 = f42.get();
-							if () //proverka na tocku!!!!!
 						}
 						cout << endl;
 					}
-				}
+					//перезапись первого на второе с флажком, что бы с него продолжить
+					else {
+						fl = 1;
+						ch1 = ch2;
+					}
+				}//ниже дл€ чего
+				/* temp
 				else if (isdigit(ch2) != 0) {
 					cout << ch1 << ch2;
 				}
-				else if (isdigit(ch2) == 0) {
-					cout << ch1 << endl;
-				}
+				else if (isdigit(ch2) == 0) { //просто вывод одного числа без знаков р€дом (по идее)
+					cout << ch1 << endl; 
+				}*/
 				else {
 					cout << endl;
 				}
