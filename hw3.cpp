@@ -3,12 +3,11 @@
 #include <fstream>  
 #include "Header.h"
 #include <string>
-#include <algorithm>
+
 
 using namespace std;
 
 int hw3() {
-	/*
 	cout << "hw3" << endl;
 	//1
 	double S, p, n, m, r, x = 0;
@@ -36,15 +35,19 @@ int hw3() {
 	S = getDouble();
 	m = getDouble();
 	n = getDouble();
+	if (S <= 0 || m <= 0 || n <= 0) {
+		cout << "error. try again." << endl;
+		hw3();
+	}
 	double r2 = 0.001;
 	while (true) {
 		x = pow((1 + r2), n);
-		if ( ((S * r2 * x) == (m * 12 * (x - 1))) ) {
+		if (((S * r2 * x) == (m * 12 * (x - 1)))) {
 			cout << "p: " << 100 * r2 << endl;
 			break;
 		}
 		if (r2 > 1) {
-			cout << ". error" << endl;
+			cout << "error. more than 100%" << endl;
 			break;
 		}
 		r2 += 0.001;
@@ -59,7 +62,9 @@ int hw3() {
 	f31.open("hw3_copy.txt");
 	
 	//cin >> text;
-	text = "hi from 3_3";
+	getline(cin, text); //разогрев
+	getline(cin, text, '\n');
+	//text = "hi from 3_3";
 
 	if (f31.is_open())	{
 		f31 << text;
@@ -75,19 +80,20 @@ int hw3() {
 		cout << endl;
 		f32.close();
 	}
-	*/
-	string text = "";
+
 	//4
-	cout << "4) write numbers in file " << endl;
+	cout << "4) write numbers in file to filter" << endl;
 	ofstream f41;
 	ifstream f42;
 	f41.open("hw3_filter.txt");
 	char ch1,ch2;
 
-	//cin >> text;
-	text = "-222.5   ";
-	text = "abc-33 3 -3 sasa-asasa-sas3sasa-3 --3 ------3 3-3 3s-s-3";
-
+	getline(cin, text, '\n');
+	//text = "ab2cgh345 6 7 c8";
+	//text = "easy: abc1vb2b3b4n567 8       9               10\nmedium: -2 1-3 4--5 -6-7------------8 ---------+0 --99--\nhard: 1.2 33.44 5,6 7..8 7. 8. .7 .8 -910.1112 1.-2";
+	//easy: 1 2 3 4 567 8 9 10
+	//medium: -2 1 -3 4 -5 -6 -7 -8 0 -99
+	//hard: 1.2 33.44 5 6 -910.1112
 	if (f41.is_open()) {
 		f41 << text;
 		f41.close();
@@ -114,39 +120,64 @@ int hw3() {
 					}
 				}
 				else if (ch1 == '-') { //если 1 минус
-					ch2 = f42.get(); //берем второе
-					//cout << endl << "test: " << ch1 << " " << ch2 << endl;
 					if (isdigit(ch2) != 0) { //если второе число
 						cout << ch1 << ch2;
-						ch1 = f42.get(); //не выводит -33 вторую 3 !!!
+						ch1 = f42.get();
 						fl = 1;
 						while (isdigit(ch1) != 0) {
 							cout << ch1;
-							if (ch1 == '.') { //proverka na tocku!!!!!
-								cout << "we are here" << endl;
-							}
+							ch2 = ch1;
 							ch1 = f42.get();
 						}
+						if ((isdigit(ch2) != 0) && (ch1 == '.')) { //если много чисел и точка, вывод точки и всех чисел после точки
+							cout << ch1;
+							ch1 = f42.get();
+							while (isdigit(ch1) != 0) {
+								cout << ch1;
+								ch1 = f42.get();
+							}
+						}
+						
 						cout << endl;
 					}
-					//перезапись первого на второе с флажком, что бы с него продолжить
-					else {
+					else { //перезапись первого на второе с флажком, что бы с него продолжить
 						fl = 1;
 						ch1 = ch2;
 					}
-				}//ниже для чего
+				}
+				else if (isdigit(ch1) != 0) { //просто вывод чисел
+					cout << ch1;
+					ch1 = ch2;
+					fl = 1;
+					while (isdigit(ch1) != 0) {
+						cout << ch1;
+						ch2 = ch1; //save if . next
+						ch1 = f42.get();
+					}
+					if ((isdigit(ch2)!=0) && (ch1 == '.')) { //если много чисел и точка, вывод точки и всех чисел после точки
+						cout << ch1;
+						ch1 = f42.get();
+							while (isdigit(ch1) != 0) {
+								cout << ch1;
+								ch1 = f42.get();
+							}
+					}
+					cout << endl;
+				}
+				else {
+					cout << endl;
+				}
+			}
+				//ниже для чего
 				/* temp
 				else if (isdigit(ch2) != 0) {
 					cout << ch1 << ch2;
 				}
 				else if (isdigit(ch2) == 0) { //просто вывод одного числа без знаков рядом (по идее)
 					cout << ch1 << endl; 
-				}*/
-				else {
-					cout << endl;
 				}
-			}
-			/*else if ((ch1 == '-' || ch1 == '+')){// &&  isdigit(ch2)!=0) {
+			
+			else if ((ch1 == '-' || ch1 == '+')){// &&  isdigit(ch2)!=0) {
 				cout << endl << ch1;
 			}*/
 		}
@@ -154,15 +185,17 @@ int hw3() {
 	}
 
 	//5
-	cout << "5) " << endl; //ввод с клав! всего файла
+	cout << "5) write string to sort" << endl; //ввод с клав! всего файла
 	ofstream f51;
 	ifstream f52;
 	f51.open("hw3_sort.txt");
 	
-	//cin>>text;
-	text = "rstuvwxyzabcdefghijklmnopqbaqw";
+	getline(cin, text, '\n');
+	//text = "rstuvwxyzabcdefghijklmnopqbaqw";
+
 	if (f51.is_open()) {
 		f51 << text;
+		f51.close();
 	}
 
 	f52.open("hw3_sort.txt");
@@ -172,8 +205,26 @@ int hw3() {
 		}
 		f52.close();
 	}
-	sort(text.begin(), text.end()); //bettersort
+
+	fl = 0;
+	while (fl == 0) {
+		fl = 1;
+		for (int i = 0; i < text.length() - 1; i++) {
+			for (int j = i + 1; j < text.length(); j++) {
+				if (text[i] > text[j]) {
+					fl = 0;
+					char temp = text[i];
+					text[i] = text[j];
+					text[j] = temp;
+				}
+			}
+		}
+	}
 	cout << text << endl;
 
+	//deleting files
+	remove("hw3_copy.txt");
+	remove("hw3_filter.txt");
+	remove("hw3_sort.txt");
 	return 0;
 }	
