@@ -9,6 +9,7 @@ using namespace std;
 
 int hw3() {
 	cout << "hw3" << endl;
+
 	//1
 	double S, p, n, m, r, x = 0;
 	cout << "1) write S, p, n" << endl;
@@ -17,11 +18,14 @@ int hw3() {
 	n = getDouble();
 	r = p / 100;
 	x = pow((1 + r), n);
-	if (S <= 0 || p <= 0 || n <= 0) {
+	if (S <= 0 || p < 0 || n <= 0) {
 		cout << "error. try again." << endl;
 		hw3();
 	}
-	if (12 * (x - 1) > 0) {
+	if (p == 0) {
+		cout << S/(n*12) << endl;
+	}
+	else if (12 * (x - 1) > 0) {
 		m = (S * r * x) / (12 * (x - 1));
 		cout << "ans: " << m << endl;
 	}
@@ -39,19 +43,19 @@ int hw3() {
 		cout << "error. try again." << endl;
 		hw3();
 	}
-	double r2 = 0.001;
-	while (true) {
-		x = pow((1 + r2), n);
-		if (((S * r2 * x) == (m * 12 * (x - 1)))) {
-			cout << "p: " << 100 * r2 << endl;
-			break;
-		}
-		if (r2 > 1) {
-			cout << "error. more than 100%" << endl;
-			break;
-		}
-		r2 += 0.001;
+	double m2 = m - 1;
+	//double pp = 123.456789;
+	//cout << round(pp*1000)/1000 << endl;
+	p = 0;
+	double r2;
+
+	while (m>m2) {
+		p += 0.1;
+		r2 = p / 100;
+		m2 = (S * r2 * pow((1 + r2), n)) / (12*((pow(1 + r2, n))-1));
 	}
+	p-=0.1;
+	cout << "p: " << p << "%" << endl;
 	
 	//3
 	cout << "3) write text in file" << endl;
@@ -168,18 +172,6 @@ int hw3() {
 					cout << endl;
 				}
 			}
-				//ниже для чего
-				/* temp
-				else if (isdigit(ch2) != 0) {
-					cout << ch1 << ch2;
-				}
-				else if (isdigit(ch2) == 0) { //просто вывод одного числа без знаков рядом (по идее)
-					cout << ch1 << endl; 
-				}
-			
-			else if ((ch1 == '-' || ch1 == '+')){// &&  isdigit(ch2)!=0) {
-				cout << endl << ch1;
-			}*/
 		}
 		f42.close();
 	}
@@ -198,8 +190,10 @@ int hw3() {
 		f51.close();
 	}
 
+
 	f52.open("hw3_sort.txt");
 	if (f52.is_open()) {
+		text = "";
 		while (!f52.eof()) {
 			text += f52.get();
 		}
@@ -209,8 +203,8 @@ int hw3() {
 	fl = 0;
 	while (fl == 0) {
 		fl = 1;
-		for (int i = 0; i < text.length() - 1; i++) {
-			for (int j = i + 1; j < text.length(); j++) {
+		for (int i = 0; i < text.length(); i++) {
+			for (int j = i + 1; j < text.length()-1; j++) {
 				if (text[i] > text[j]) {
 					fl = 0;
 					char temp = text[i];

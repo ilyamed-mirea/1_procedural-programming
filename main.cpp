@@ -36,7 +36,8 @@ double getDouble() {
 int main() {
     //hw1();
     //hw2();
-	hw3();
-    //hw4();
+	//hw3();
+    hw4();
+    //hw5();
     return 0;
 }

@@ -144,6 +144,7 @@
     <ClCompile Include="hw2.cpp" />
     <ClCompile Include="hw3.cpp" />
     <ClCompile Include="hw4.cpp" />
+    <ClCompile Include="hw5.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="sort.cpp" />
   </ItemGroup>

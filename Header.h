@@ -3,6 +3,7 @@ int hw1();
 int hw2();
 int hw3();
 int hw4();
+int hw5();
 bool isZero(int x);
 int getInt();
 double getDouble();
