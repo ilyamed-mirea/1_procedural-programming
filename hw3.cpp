@@ -104,7 +104,6 @@ int hw3() {
 	}
 	int fl = 0;
 	f42.open("hw3_filter.txt");
-	//2. и .2 нет
 	if (f42.is_open()) {
 		while (!f42.eof()) {
 			fl==1?fl=0:ch1 = f42.get();
