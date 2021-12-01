@@ -18,16 +18,14 @@ string checkT(double x) {
 	else if (x < 0) {
 		return "num is negative";
 	}
-	else {
-		return "error";
-	}
+	return "error";
 }
 
 void rect() {
-	cout << "print a,b" << endl;
-	int a = getInt();
-	int b = getInt();
-	if (a > 0 && b > 0) {
+	cout << "write a,b" << endl;
+	int a = getDouble();
+	int b = getDouble();
+	if (a >= 0 && b >= 0) {
 		cout << "S: " << a * b << endl;
 	}
 	else {
@@ -35,21 +33,24 @@ void rect() {
 	}
 }
 void triangle() {
-	cout << "print a,h" << endl;
-	int a = getInt();
-	int h = getInt();
-	if (a>0 && h>0) {
-		cout << "S: " << 0.5 * a * h << endl;
+	cout << "write sides: a,b,c" << endl;
+	double a = getDouble();
+	double b = getDouble();
+	double c = getDouble();
+	if ((a + b > c) && (a + c > b) && (b + c > a)) {
+		double p = (a + b + c) / 2; 
+		double s = sqrt(p * (p - a) * (p - b) * (p - c));  
+		cout << "S: " << s << endl;
 	}
 	else {
 		cout << "doesnt exist" << endl;
 	}
 }
 void round() {
-	cout << "print r" << endl;
-	int r = getInt();
-	if (r>0) {
-		cout << "S: " << M_PI * pow(r,2) << endl;
+	cout << "write r" << endl;
+	int r = getDouble();
+	if (r>=0) {
+		cout << "S: " << 3.14 * pow(r,2) << endl;
 	}
 	else {
 		cout << "doesnt exist" << endl;
@@ -89,19 +90,19 @@ string ConvertCC(string a, int from, int to) {
 }
 
 int hw4() {
+	/*
 	cout << "hw4" << endl << "1) write 10 numbers " << endl;
 	//1
+	double x, x2, s1 = 0;
 	ofstream f11("h4_1.txt");
 	for (int i = 0; i < 10; i++) {
 		cout << "write num " << i+1 << ": ";
-		int x = getInt();
+		x = getDouble();
 		f11 << x << endl;
 	}
 	f11.close();
 	ifstream f12("h4_1.txt");
-	int x;
-	double x2;
-	int s1 = 0;
+	x = 0;
 	while (f12 >> x) {	//(!f2.eof()) {
 		s1 += x;
 	}
@@ -115,8 +116,8 @@ int hw4() {
 
 	//3
 	cout << "3) for rectangle print 1, for triangle print 2, for round print 3" << endl;
-	x = getInt();
-	switch (x) {
+	int choose = getInt();
+	switch (choose) {
 		case 1:
 			rect();
 			break;
@@ -134,63 +135,60 @@ int hw4() {
 	//4
 	cout << "4)" << endl;
 	string str="";
+	bool fl = true;
 	for (int i = 0; i < 14; i++) {
 		if (i < 8) {
 			for (int j = 0; j < 6; j++) {
 				str += " * ";
 			}
-
-			for (int j = 0; j < 24; j++) {
-				str += "=";
+			if (fl) {
+				for (int j = 0; j < 24; j++) {
+					str += "=";
+				}
 			}
 		}
 		else {
+			if (fl) {
 			for (int j = 0; j < 42; j++) {
 				str += "=";
 			}
+			}
 		}
+		fl = fl ? false : true;
 		cout << str << endl;
 		str = "";
 	}
 	//5
-	system("pause");
-	system("cls");
 	cout << "5) y = sin(x)" << endl;
-	//float x; now double
-	int scale = 40;
+	system("pause");
+	system("cls");system("cls");
+	cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+	int sinm = 70;
 	HDC hDC = GetDC(GetConsoleWindow());
 	HPEN Pen = CreatePen(PS_SOLID, 2, RGB(255, 255, 255));
+	SelectObject(hDC, Pen); //OX
+	MoveToEx(hDC, 0, 100, NULL);
+	LineTo(hDC, 800, 100);  //OY
+	MoveToEx(hDC, 100, 0, NULL);
+	LineTo(hDC, 100, 200);
+	Pen = CreatePen(PS_SOLID, 2, RGB(255, 255, 255));
 	SelectObject(hDC, Pen);
-	
-	//MoveToEx(hDC, 0, 85, NULL);
-	//LineTo(hDC, 200, 85); zero coord
-	//MoveToEx(hDC, 100, 0, NULL);
-	//LineTo(hDC, 100, 170); 
-
-	//move(dc, y, x, null)
-	MoveToEx(hDC, 0, 285, NULL);
-	LineTo(hDC, 600, 285); //x
-	MoveToEx(hDC, 300, 0, NULL);
-	LineTo(hDC, 300, 600); //y
-
-	for (x2 = -8.0f; x2 <= 8.0f; x2 += 0.01f) // O(300,285) - center
+	for (float x = -10.0; x <= 10.0; x += 0.01)
 	{
-		MoveToEx(hDC, scale * x2 + 300, -scale * sin(x2) + 285, NULL);
-		LineTo(hDC, scale * x2 + 300, -scale * sin(x2) + 285);
+		MoveToEx(hDC, sinm * x + 100, -sinm * sin(x) + 100, NULL);
+		LineTo(hDC, sinm * x + 100, -sinm * sin(x) + 100);
 	}
 	
-
 	//6
 	cout << "6) write roman number" << endl;
 	char lat[100];
 	int count = 0;
 
+	//cin.getline(lat, 100);
 	cin.getline(lat, 100);
-	cin.getline(lat, 100);
-	//povtor 
+	for (int i = 0; i < strlen(lat); i++) lat[i] = toupper(lat[i]);
 	int chk = 0;
 	for (int i = 0; i < strlen(lat); i++) {
-		//
 		chk = 0;
 		if (lat[i] == 'I') {
 			int x = i;
@@ -206,7 +204,13 @@ int hw4() {
 				chk = 0;
 			}
 		}
-		if (lat[i] == 'V') {
+		else if (lat[i]!='I') {
+			if (lat[i - 1] == 'I' && lat[i + 1] == 'I') {
+				count += 1;
+				break;
+			}
+		}
+		else if (lat[i] == 'V') {
 			int x = i;
 			while (lat[x] == 'V') {
 				x += 1;
@@ -220,7 +224,7 @@ int hw4() {
 				chk = 0;
 			}
 		}
-		if (lat[i] == 'X') {
+		else if (lat[i] == 'X') {
 			int x = i;
 			while (lat[x] == 'X') {
 				x += 1;
@@ -233,14 +237,26 @@ int hw4() {
 			else {
 				chk = 0;
 			}
+			for (int z = i - 1; z >= 0; z--) {
+				if (lat[z] == 'V') {
+					count += 1;
+					break;
+				}
+			}
+			for (int z = i + 1; z < strlen(lat); z++) {
+				if (lat[z] == 'D' || lat[z]=='M') {
+					count += 1;
+					break;
+				}
+			}
 		}
-		if (lat[i] == 'L') {
+		else if (lat[i] == 'L') {
 			if (lat[i+1] == 'L') {
 				count += 1;
 				break;
 			}
 		}
-		if (lat[i] == 'C') {
+		else if (lat[i] == 'C') {
 			int x = i;
 			while (lat[x] == 'C') {
 				x += 1;
@@ -254,17 +270,15 @@ int hw4() {
 				chk = 0;
 			}
 		}
-		if (lat[i] == 'D') {
+		else if (lat[i] == 'D') {
 			if (lat[i + 1] == 'D') {
 				count += 1;
 				break;
 			}
 		}
+		else {
 
-
-
-
-		//pr на 4 I подряд
+		}
 	}
 	if (count == 0) {
 		for (int i = 0; i < strlen(lat); i++) {
@@ -300,25 +314,28 @@ int hw4() {
 				break;
 			}
 		}
+		cout << "decoded: " << count << endl;
 	}
 	else {
 		cout << "error. invalid number" << endl;
 	}
-	cout << "decoded: " << count << endl;
-
+	
+	
 	//7
 	cout << "7) write m,i,c" << endl;
-	double m, i, c, s, slast;
-	m = getDouble();
-	i = getDouble();
-	c = getDouble();
-	slast = 0.0;
-	s = 0.0;
+	int m, i, c,slast,s;
+	m = getInt();
+	i = getInt();
+	c = getInt();
+	slast = 0;
+	s = 0;
+	cout << "s(0) = 0" <<endl;
 	for (int k = 0; k < 5; k++) {
-		s = fmod((m * slast + i), c);
-		cout << s << endl;
+		s = (m * slast + i) % c;
+		cout << "s(" << k + 1 << ") = (" << m << "*" << slast << " + " << i << ") % " << c << " = " << s << endl;
 		slast = s;
 	}
+	*/
 	//8
 	cout << "8) " << endl;
 	int ma[3][4] = { {5,2,0,10}, {3,5,2,5}, {20,0,0,0} };
@@ -358,7 +375,7 @@ int hw4() {
 		}
 		cout << endl;
 	}
-	*/
+	
 
 	//calc mc
 	double res = 0;
@@ -442,7 +459,7 @@ int hw4() {
 		res += mc[i][1] + mc[i][0];
 	}
 	cout << "all money: " << res << endl;
-
+	*/
 	//9
 	cout << "9) " << endl;
 	string num,ans;

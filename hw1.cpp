@@ -1,7 +1,4 @@
-﻿// hw1.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
-//
-
-#include <iostream>
+﻿#include <iostream>
 #include <cmath>
 #include "Header.h"
 using namespace std;
@@ -17,9 +14,9 @@ int hw1()
     double x, y;
     double del;
     cout << "2) Введите x и y" << endl;
-    x = getInt();
-    y = getInt();
-    if (isZero(y)) {
+    x = getDouble();
+    y = getDouble();
+    if (y==0) {
         del = 0.0;
     }
     else {
@@ -31,10 +28,10 @@ int hw1()
         << "x/y " << (del) << endl;
 
     //3
-    int b, c;
+    double b, c;
     cout << "3) введите b и c" << endl;
-    b = getInt();
-    c = getInt();
+    b = getDouble();
+    c = getDouble();
     if (b == 0 && c == 0) {
         cout << "Бесконечное кол-во решений" << endl;
     }
@@ -43,7 +40,7 @@ int hw1()
     }
     else {
         int count = 0;
-        for (int x = -1000; x < 1000; x++) { 
+        for (double x = -1000; x < 1000; x+=0.1) { 
             if (((b * x) + c) == 0) {
                 count++;
             }
@@ -52,34 +49,29 @@ int hw1()
     }
 
     //4
-    int a;
+    double a;
     double d, x1, x2;
     a, b, c = 0;
     cout << "4) Введите a,b,c" << endl;
-    a = getInt();
-    b = getInt();
-    c = getInt();
-        d = (pow(b, 2)) - ((4 * a) * c);
+    a = getDouble();
+    b = getDouble();
+    c = getDouble();
+        d = (pow(b, 2)) - (4 * a * c);
         if (d < 0) {
             cout << "нет корней" << endl;
         }
-        else {
-            if (a == 0) {
-                if (b != 0) {
-                    cout << "x: " << (-c) / b << endl;
-                }
-                else if (c == 0) {
-                    cout << "infinity answers" << endl;
-                }
-                else {
-                    cout << "no ans";
-                }
-            }
-            else {
-                x1 = ((-b) + (sqrt(d))) / (2 * a);
-                x2 = ((-b) - (sqrt(d))) / (2 * a);
-                cout << "x1: " << x1 << " x2: " << x2 << endl;
-            }
+        else if (d == 0) {
+            x = -b / (2 * a);
+            if (x == 0)
+                x = abs(x);
+            cout << "x = " << x;
+        }
+        else if (d > 0)
+        {
+            x1 = (-b - sqrt(d)) / (2 * a);
+            x2 = (-b + sqrt(d)) / (2 * a);
+            cout << "x1 = " << x1 << endl;
+            cout << "x2 = " << x2 << endl;
         }
 
     //5
@@ -88,6 +80,12 @@ int hw1()
     a = getInt();
     b = getInt();
     c = getInt();
+    if ((a != 0 && a != 1) || (b != 0 && b != 1) || (c != 0 && c != 1)) {
+        cout << "ошибка. введите еще раз" << endl;
+        a = getInt();
+        b = getInt();
+        c = getInt();
+    }
     if (a == 1 || (b == 1 && c == 1)) {
         cout << "светло" << endl;
     }
@@ -96,14 +94,3 @@ int hw1()
     }
     return 0;
 }
-
-// Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
-// Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
-
-// Советы по началу работы 
-//   1. В окне обозревателя решений можно добавлять файлы и управлять ими.
-//   2. В окне Team Explorer можно подключиться к системе управления версиями.
-//   3. В окне "Выходные данные" можно просматривать выходные данные сборки и другие сообщения.
-//   4. В окне "Список ошибок" можно просматривать ошибки.
-//   5. Последовательно выберите пункты меню "Проект" > "Добавить новый элемент", чтобы создать файлы кода, или "Проект" > "Добавить существующий элемент", чтобы добавить в проект существующие файлы кода.
-//   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.

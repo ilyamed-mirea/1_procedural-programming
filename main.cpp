@@ -1,11 +1,7 @@
-
 #include <iostream>
 #include "Header.h"
-using namespace std;
 
-bool isZero(int x) {
-    return x == 0;
-}
+using namespace std;
 
 int getInt() {
     int a;
@@ -36,8 +32,8 @@ double getDouble() {
 int main() {
     //hw1();
     //hw2();
-	hw3(); //filter no
+	//hw3();
     //hw4();
-    //hw5();
+    hw5();
     return 0;
 }

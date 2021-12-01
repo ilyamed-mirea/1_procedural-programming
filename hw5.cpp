@@ -1,11 +1,7 @@
 #include <iostream>
 #include <cmath>
-#include <fstream>  
 #include "Header.h"
 #include <string>
-#include <algorithm>
-#include <cstdlib>
-#include <Windows.h>
 using namespace std;
 
 bool isPrime(int x) {
@@ -26,7 +22,7 @@ bool isPrime(int x) {
 
 int hw5() {
 	//1
-	cout << "1) print n1 and n2" << endl;
+	cout << "1) write n1 and n2" << endl;
 	int n1 = getInt();
 	int n2 = getInt();
 	int x1 = n1;
@@ -59,17 +55,44 @@ int hw5() {
 		}
 	}
 
-	//3
-	string alp = "0123456789ABCDEFGHIJKLMNOPQESTUVWXYZ";
-	cout << "32) print sdvig:" << endl;
+	//3.32 files
+	string alp = "ABCDEFGHIJKLMNOPQRESTUVWXYZ";
+	int alplen = alp.length();
+	//string nums = "0123456789";
+	cout << "3.32) write sdvig:" << endl;
 	n = getInt();
-	cout << "print string: " << endl;
+	cout << "write string (in english): " << endl;
 	string str;
-	cin >> str;
+	getline(cin, str, '\n'); //heatup
+	getline(cin, str, '\n');
+
 	for (int i = 0; i < str.length(); i++) {
-
+			char temp = str[i];
+			for (int j = 0; j < alplen; j++) {
+				if (alp[j] == str[i]) {
+					int sum = j + n;
+					if (sum > alplen) {
+						while (sum > alplen) {
+							sum -= alplen;
+						}
+					}
+					str[i] = alp[sum];
+					break;
+				}
+				else if (tolower(alp[j]) == str[i]) {
+					int sum = j + n;
+					if (sum > alplen) {
+						while (sum > alplen) {
+							sum -= alplen;
+						}
+					}
+					str[i] = tolower(alp[sum]);
+					break;
+				}
+			}
 	}
+	cout << "coded: " << str << endl;
 
-	//fix 3.1 + 3.4 + 3.5 + 4.3 + 4.6
+
 	return 0;
 }

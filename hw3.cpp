@@ -4,7 +4,6 @@
 #include "Header.h"
 #include <string>
 
-
 using namespace std;
 
 int hw3() {
@@ -25,7 +24,7 @@ int hw3() {
 	if (p == 0) {
 		cout << S/(n*12) << endl;
 	}
-	else if (12 * (x - 1) > 0) {
+	else if ((12 * (x - 1)) > 0) {
 		m = (S * r * x) / (12 * (x - 1));
 		cout << "ans: " << m << endl;
 	}
@@ -39,16 +38,23 @@ int hw3() {
 	S = getDouble();
 	m = getDouble();
 	n = getDouble();
-	if (S <= 0 || m <= 0 || n <= 0) {
+	if (S <= 0 || m <= 0 || n <= 0 || m > S) {
 		cout << "error. try again." << endl;
 		hw3();
+		return 0;
 	}
 	double m2 = m - 1;
-	//double pp = 123.456789;
-	//cout << round(pp*1000)/1000 << endl;
 	p = 0;
 	double r2;
-
+	/*
+	while (m > m2){  // если m>m0 
+    	i += 1;
+    	p = i / (1000);
+    	r = p/100;
+    	m2 = (S * r* pow(1 + r, n)) / (12 * (pow(1 + r, n) - 1));
+	}
+    cout << endl << "P = " << p << endl;
+	*/
 	while (m>m2) {
 		p += 0.1;
 		r2 = p / 100;
@@ -59,8 +65,8 @@ int hw3() {
 	
 	//3
 	cout << "3) write text in file" << endl;
-	ofstream f31;
-	ifstream f32;
+	ofstream f31; //in
+	ifstream f32; //out
 	string text;
 
 	f31.open("hw3_copy.txt");
@@ -69,21 +75,16 @@ int hw3() {
 	getline(cin, text); //разогрев
 	getline(cin, text, '\n');
 	//text = "hi from 3_3";
-
-	if (f31.is_open())	{
-		f31 << text;
-		f31.close();
-	}
+	f31 << text;
+	f31.close();
 
 	f32.open("hw3_copy.txt");
-	if (f32.is_open()) {
-		while (!f32.eof()) {
-			f32 >> text;
-			cout << text << " ";
-		}
-		cout << endl;
-		f32.close();
+	while (!f32.eof()) {
+		f32 >> text;
+		cout << text << " ";
 	}
+	cout << endl;
+	f32.close();
 
 	//4
 	cout << "4) write numbers in file to filter" << endl;
@@ -102,6 +103,7 @@ int hw3() {
 		f41 << text;
 		f41.close();
 	}
+
 	int fl = 0;
 	f42.open("hw3_filter.txt");
 	if (f42.is_open()) {
@@ -184,31 +186,30 @@ int hw3() {
 	getline(cin, text, '\n');
 	//text = "rstuvwxyzabcdefghijklmnopqbaqw";
 
-	if (f51.is_open()) {
-		f51 << text;
-		f51.close();
-	}
-
+	f51 << text;
+	f51.close();
 
 	f52.open("hw3_sort.txt");
-	if (f52.is_open()) {
-		text = "";
-		while (!f52.eof()) {
-			text += f52.get();
-		}
-		f52.close();
+	text = "";
+	while (!f52.eof()) {
+		text += f52.get();
 	}
+	f52.close();
 
 	fl = 0;
 	while (fl == 0) {
 		fl = 1;
-		for (int i = 0; i < text.length(); i++) {
-			for (int j = i + 1; j < text.length()-1; j++) {
-				if (text[i] > text[j]) {
-					fl = 0;
+		for (int i = 0; i < text.length()-1; i++) {
+			for (int j = i + 1; j < text.length(); j++) {
+				int s = tolower(text[i]) - tolower(text[j]);
+				if (s == 0) {
+					s = text[i] - text[j];
+				}
+				if (s>0) {
 					char temp = text[i];
 					text[i] = text[j];
 					text[j] = temp;
+					fl = 0;
 				}
 			}
 		}
