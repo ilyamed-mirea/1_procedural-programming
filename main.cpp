@@ -34,6 +34,8 @@ int main() {
     //hw2();
 	//hw3();
     //hw4();
-    hw5();
+    //hw5();
+    //hw6();
+    spin();
     return 0;
 }

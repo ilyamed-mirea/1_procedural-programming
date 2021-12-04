@@ -57,7 +57,8 @@ void round() {
 	}
 }
 
-string ConvertCC(string a, int from, int to) {
+
+string ConvertCC1(string a, int from, int to) { //old
 	string abc = "0123456789ABCDEFGHIJKLMNOPQESTUVWXYZ";
 	string buf, result = "";
 	int i, k = 0;
@@ -88,9 +89,66 @@ string ConvertCC(string a, int from, int to) {
 
 	return result;
 }
+string ConvertCC2(string gotnum, int sys1, int sys2) { //new
+	string a = { '0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
+	string num, new_num, fraction, res;
+	bool d = false;
+	bool minus = false;
+	int sum = 0;
+	num = gotnum;
+
+	for (char n : num) {
+		if (n == '-') {
+			minus = true;
+		}
+		if (n == '.' or n == ',' and d == false) {
+			d = true;
+		}
+		for (char check : a) {
+			if (a.find(n) >= sys1 and n != '.' and n != ',' and n != '-') {
+				return "error. try again";
+			}
+			if (n == check and d == false and n != '-') {
+				new_num += a.find(check);
+			}
+			if (n == check and d == true) {
+				fraction += a.find(check);
+			}
+		}
+	}
+
+	int k = 1;
+	for (char n : new_num) {
+		sum += int(n) * pow(sys1, new_num.length() - k);
+		k++;
+	}
+	while (sum > 0) {
+		res += a[(sum % sys2)];
+		sum /= sys2;
+	}
+
+	reverse(res.begin(), res.end());
+
+	if (d == true) {
+		res += ',';
+		float sum = 0;
+		k = -1;
+		for (char n : fraction) {
+			sum += int(n) * pow(sys1, k);
+			k--;
+		}
+		k = 0;
+		while (k < 10 and sum > 0) {
+			res += a[int((sum * sys2) / 1)];
+			sum = fmod(sum * sys2, 1);
+			k++;
+		}
+	}
+
+	return minus ? ("new num: -" + res) : ("new num: " + res);
+}
 
 int hw4() {
-	/*
 	cout << "hw4" << endl << "1) write 10 numbers " << endl;
 	//1
 	double x, x2, s1 = 0;
@@ -108,6 +166,7 @@ int hw4() {
 	}
 	cout << "sum: " << s1 << endl;
 	f12.close();
+	remove("h4_1.txt");
 
 	//2
 	cout << "2) write number" << endl;
@@ -184,12 +243,21 @@ int hw4() {
 	char lat[100];
 	int count = 0;
 
-	//cin.getline(lat, 100);
+	cin.getline(lat, 100);
 	cin.getline(lat, 100);
 	for (int i = 0; i < strlen(lat); i++) lat[i] = toupper(lat[i]);
 	int chk = 0;
 	for (int i = 0; i < strlen(lat); i++) {
+		//?
+	}
+	for (int i = 0; i < strlen(lat); i++) {
 		chk = 0;
+		if (lat[i] != 'I') {
+			if ((lat[i - 1] == 'I' && i==(strlen(lat)-1)) || (lat[i-1]=='I'&&lat[i+1]=='I')) { //&& (lat[i + 1] == 'I')
+				count += 1;
+				break;
+			}
+		}
 		if (lat[i] == 'I') {
 			int x = i;
 			while (lat[x] == 'I') {
@@ -200,42 +268,26 @@ int hw4() {
 				count += 1;
 				break;
 			}
-			else {
-				chk = 0;
-			}
-		}
-		else if (lat[i]!='I') {
-			if (lat[i - 1] == 'I' && lat[i + 1] == 'I') {
-				count += 1;
-				break;
-			}
 		}
 		else if (lat[i] == 'V') {
-			int x = i;
-			while (lat[x] == 'V') {
-				x += 1;
-				chk += 1;
+			for (int z = 0; z < strlen(lat); z++) {
+				if (lat[z] == 'V')
+					chk+=1;
 			}
 			if (chk >= 2) {
 				count += 1;
 				break;
 			}
-			else {
-				chk = 0;
-			}
 		}
 		else if (lat[i] == 'X') {
 			int x = i;
 			while (lat[x] == 'X') {
-				x += 1;
-				chk += 1;
+				chk++;
+				x++;
 			}
 			if (chk >= 4) {
 				count += 1;
 				break;
-			}
-			else {
-				chk = 0;
 			}
 			for (int z = i - 1; z >= 0; z--) {
 				if (lat[z] == 'V') {
@@ -251,7 +303,11 @@ int hw4() {
 			}
 		}
 		else if (lat[i] == 'L') {
-			if (lat[i+1] == 'L') {
+			for (int z = 0; z < strlen(lat); z++) {
+				if (lat[z] == 'L' || lat[z] == 'V')
+					chk += 1;
+			}
+			if (chk >= 2) {
 				count += 1;
 				break;
 			}
@@ -266,20 +322,33 @@ int hw4() {
 				count += 1;
 				break;
 			}
-			else {
-				chk = 0;
+			for (int z = i - 1; z >= 0; z--) {
+				if (lat[z] == 'I' || lat[z] == 'V' || lat[z] == 'L') {
+					count += 1;
+					break;
+				}
 			}
 		}
 		else if (lat[i] == 'D') {
-			if (lat[i + 1] == 'D') {
+			for (int z = 0; z < strlen(lat); z++) {
+				if (lat[z] == 'D')
+					chk += 1;
+			}
+			if (chk >= 2) {
 				count += 1;
 				break;
 			}
 		}
-		else {
-
+		else if (lat[i] =='M') {
+			for (int z = i - 1; z >= 0; z--) {
+				if (lat[z] != 'C' && lat[z] != 'M') { //before M only C,M
+					count += 1;
+					break;
+				}
+			}
 		}
 	}
+
 	if (count == 0) {
 		for (int i = 0; i < strlen(lat); i++) {
 			switch (lat[i]) {
@@ -308,7 +377,7 @@ int hw4() {
 				count += 5;
 				break;
 			case 'I':
-				if (i + 1 < strlen(lat) && (lat[i + 1] == 'V' || lat[i + 1] == 'X' || lat[i + 1] == 'C'))
+				if (i + 1 < strlen(lat) && (lat[i + 1] == 'V' || lat[i + 1] == 'X'))
 					count -= 1;
 				else count += 1;
 				break;
@@ -330,19 +399,19 @@ int hw4() {
 	slast = 0;
 	s = 0;
 	cout << "s(0) = 0" <<endl;
-	for (int k = 0; k < 5; k++) {
-		s = (m * slast + i) % c;
-		cout << "s(" << k + 1 << ") = (" << m << "*" << slast << " + " << i << ") % " << c << " = " << s << endl;
+	for (int f = 0; f <= i; f++) {
+		s = (m * slast + f) % c;
+		cout << "s(" << f+1 << ") = (" << m << "*" << slast << " + " << f << ") % " << c << " = " << s << endl;
 		slast = s;
 	}
-	*/
+	
 	//8
 	cout << "8) " << endl;
 	int ma[3][4] = { {5,2,0,10}, {3,5,2,5}, {20,0,0,0} };
 	double mb[4][2] = { {1.20, 0.50}, {2.80,0.40}, {5.00,1.00}, {2.00,1.50} };
 	double mc[3][2];
 	
-	/*
+	
 	//cin maxtrix
 	cout << "write ma:" << endl;
 	for (int i = 0; i < 4; i++) {
@@ -459,21 +528,21 @@ int hw4() {
 		res += mc[i][1] + mc[i][0];
 	}
 	cout << "all money: " << res << endl;
-	*/
+
 	//9
 	cout << "9) " << endl;
-	string num,ans;
-	int oldBase,newBase = 0;
+	string num;
+	int oldBase, newBase = 0;
+	bool hasMinus = false;
 	cout << "write num" << endl;
+	//cin >> num;
 	cin >> num;
 	cout << "write old base" << endl;
 	oldBase = getInt();
 	cout << "write new base" << endl;
 	newBase = getInt();
 
-	ans = ConvertCC(num, oldBase, newBase);
-	cout << ans << endl;
-
+	cout << ConvertCC2(num, oldBase, newBase) << endl;
 	
 	return 0;
 }
