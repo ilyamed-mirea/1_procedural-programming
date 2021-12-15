@@ -120,7 +120,7 @@ int hw6() {
 	remove("h6_1decode.txt");
 
 	//chisla
-	cout << "amorf. print m,n: " << endl;
+	cout << "avtomorf. print m,n: " << endl;
 	int a = getInt();
 	int b = getInt();
 	cout << "===============================" << endl;

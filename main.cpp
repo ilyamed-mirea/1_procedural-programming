@@ -29,7 +29,7 @@ double getDouble() {
     return a;
 }
 
-int mmain() {
+int main() {
     //hw1();
     //hw2();
 	//hw3();
@@ -38,6 +38,6 @@ int mmain() {
     //hw6();
     //spin();
     //d98();
-    d99();
+    //d99();
     return 0;
 }
