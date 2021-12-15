@@ -1,74 +1,74 @@
 // C++ implementation of Radix Sort
 #include <iostream>
+#include <vector>
 using namespace std;
-/*
-// A utility function to get maximum value in arr[]
-int getMax(int arr[], int n)
-{
-    int max = arr[0];
-    for (int i = 1; i < n; i++)
-        if (arr[i] > max)
-            max = arr[i];
-    return max;
+
+// A function to do counting sort of arr[] according to the digit represented by exp.
+vector<int> countSortcom(vector<int> arr, int exp) {
+	vector<int> output(arr.size()); // output array
+	int i, count[10] = { 0 };
+	cout << endl << "begin cycle" << endl;
+	// Store count of occurrences in count[]
+	cout << "ff" << endl;
+	for (i = 0; i < arr.size(); i++) {
+		cout << "filling count" << endl;
+		count[(arr[i] / exp) % 10]++; // (arr[i] / exp) % 10 - current digit
+		cout << "index: " << (arr[i] / exp) % 10 << ", val: " << count[(arr[i] / exp) % 10] << "; ";
+	}
+	cout << "ff end" << endl;
+	// Change count[i] so that count[i] now contains actual
+	// position of this digit in output[]
+	cout << "sdvig start" << endl;
+	for (i = 1; i < 10; i++) {
+		cout << count[i] << " + " << count[i - 1] << " = " << count[i] + count[i - 1] << endl;
+		count[i] += count[i - 1];
+	}
+	cout << "sdv end" << endl;
+
+	// Build the output array
+	for (i = arr.size() - 1; i >= 0; i--) {
+		cout << "output[" << count[(arr[i] / exp) % 10] - 1 << "] = " << arr[i] << endl;
+		output[count[(arr[i] / exp) % 10] - 1] = arr[i];
+		count[(arr[i] / exp) % 10]--;
+	}
+
+	return output;
 }
-
-// A function to do counting sort of arr[] according to
-// the digit represented by exp.
-void countSort(int arr[], const int n, int exp)
-{
-    int output[n]; // output array
-    int i, count[10] = { 0 };
-
-    // Store count of occurrences in count[]
-    for (i = 0; i < n; i++)
-        count[(arr[i] / exp) % 10]++;
-
-    // Change count[i] so that count[i] now contains actual
-    //  position of this digit in output[]
-    for (i = 1; i < 10; i++)
-        count[i] += count[i - 1];
-
-    // Build the output array
-    for (i = n - 1; i >= 0; i--) {
-        output[count[(arr[i] / exp) % 10] - 1] = arr[i];
-        count[(arr[i] / exp) % 10]--;
-    }
-
-    // Copy the output array to arr[], so that arr[] now
-    // contains sorted numbers according to current digit
-    for (i = 0; i < n; i++)
-        arr[i] = output[i];
+void radix_sort(int *a, int n) {
+	int i = 0, b[100], m = 0, exp = 1;
+	for (i = 0; i < n; i++)
+		if (a[i] > m)
+			m = a[i];
+	for (exp; m / exp > 0; exp *= 10) {
+		int box[10] = { 0 };
+		i = 0;
+		for (i = 0; i < n; i++) {
+			box[(a[i] / exp) % 10]++;
+		}
+		for (i = 1; i < 10; i++) {
+			box[i] += box[i - 1];
+		}
+		for (i = n - 1; i >= 0; i--) {
+			b[--box[(a[i] / exp) % 10]] = a[i];
+		}
+		for (i = 0; i < n; i++) {
+			a[i] = b[i];
+		}
+	}
 }
-
-// The main function to that sorts arr[] of size n using
-// Radix Sort
-void radixsort(int arr[], int n)
-{
-    // Find the maximum number to know number of digits
-    int m = getMax(arr, n);
-
-    // Do counting sort for every digit. Note that instead
-    // of passing digit number, exp is passed. exp is 10^i
-    // where i is current digit number
-    for (int exp = 1; m / exp > 0; exp *= 10)
-        countSort(arr, n, exp);
-}
-
-// A utility function to print an array
-void print(int arr[], int n)
-{
-    for (int i = 0; i < n; i++)
-        cout << arr[i] << " ";
-}
-
 // Driver Code
 int main()
 {
-    int arr[] = { 170, 45, 75, 90, 802, 24, 2, 66 };
-    const int n = sizeof(arr) / sizeof(arr[0]);
-
-    // Function Call
-    radixsort(arr, n);
-    print(arr, n);
-    return 0;
-}*/
+	cout << "radix sort" << endl << "write numbers" << endl;
+	int arr[100] = {0};
+	int n=0,x;
+	while (cin>>x) {
+		arr[n]=x;
+		n++;
+	}
+	radix_sort(arr,n);
+	cout << "output: " << endl;
+	for (int i = 0; i < n; i++)
+		cout << arr[i] << " ";
+	return 0;
+}

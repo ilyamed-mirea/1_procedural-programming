@@ -140,6 +140,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="d98.cpp" />
+    <ClCompile Include="d99.cpp" />
     <ClCompile Include="hw1.cpp" />
     <ClCompile Include="hw2.cpp" />
     <ClCompile Include="hw3.cpp" />
