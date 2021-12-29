@@ -37,7 +37,9 @@ int main() {
     //hw5();
     //hw6();
     //spin();
+    //chariki();
     //d98();
     //d99();
+    LIFE();
     return 0;
 }

@@ -17,21 +17,6 @@ void erat(int n) {
 				a[j] = 0;
 		}
 	}
-	/*
-	int c = 0;
-	for (int i = 2; i < x; i++) {
-		if (x % i == 0) {
-			c += 1;
-			break;
-		}
-	}
-	if (c == 0) {
-		return true;
-	}
-	else {
-		return false;
-	}
-	*/
 }
 
 int hw5() {

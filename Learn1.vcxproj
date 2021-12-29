@@ -140,6 +140,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="chariki.cpp" />
     <ClCompile Include="d98.cpp" />
     <ClCompile Include="d99.cpp" />
     <ClCompile Include="hw1.cpp" />
@@ -148,6 +149,7 @@
     <ClCompile Include="hw4.cpp" />
     <ClCompile Include="hw5.cpp" />
     <ClCompile Include="hw6.cpp" />
+    <ClCompile Include="life.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="sort.cpp" />
     <ClCompile Include="spin.cpp" />

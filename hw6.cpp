@@ -4,6 +4,7 @@
 #include <fstream>  
 #include "Header.h"
 #include <string>
+#include <cmath>
 using namespace std;
 
 string convert(string num, int to) {
@@ -78,20 +79,51 @@ int hw6() {
 		}
 	}
 
-	//file
-	cout << "5.16) " << endl << "to system: ";
-	int to = getInt();
-	if (to > 9 || to < 2) {
-		cout << "error. only 2 - 9 systems. try again" << endl;
-		exit(0);
-	}
-	
-	string str = "24 3C 6BCA24A";
-	cout << "numbers in 16 system: " << str << endl;
-	//getline(cin, str, '\n');
+	//file 5.16
+	bool fl = true;
+	string aa = { '0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F',' '};
+	string str = "";
+	system("pause");
+	getline(cin, str, '\n');
+	int to;
 	ofstream f61("h6_1code.txt");
+	while (fl) {
+		fl = false;
+		cout << "5.16) write numbers in 16x system: " << endl;
+		getline(cin, str, '\n');
+		for (int i = 0; i < str.length(); i++) {
+			bool ch = false;
+			for (int j = 0; j < aa.length(); j++) {
+				if (str[i] == aa[j]) {
+					ch = true;
+					break;
+				}
+			}
+			if (!ch) {
+				fl = true;
+				cout << "error. try again" << endl;
+				break;
+			}
+		}
+	}
 	f61 << str;
 	f61.close();
+
+	cout << "numbers in 16 system: " << str << endl;
+	fl = true;
+	while (fl) {
+		fl = false;
+		cout << "to system: ";
+		int toz = getInt();
+		if (toz > 9 || toz < 2) {
+			cout << "error. only 2 - 9 systems. try again" << endl;
+			fl = true;
+		}
+		else {
+			to = toz;
+		}
+	}
+
 	str = "";
 
 	ifstream f62("h6_1code.txt");
@@ -119,10 +151,23 @@ int hw6() {
 	remove("h6_1code.txt");
 	remove("h6_1decode.txt");
 
-	//chisla
-	cout << "avtomorf. print m,n: " << endl;
-	int a = getInt();
-	int b = getInt();
+	//chisla avtomorfn
+	fl = true;
+	int a, b;
+	while (fl) {
+		fl = false;
+		cout << "avtomorf. print m,n: " << endl;
+		int a2 = getInt();
+		int b2 = getInt();
+		if (a2 > b2) {
+			cout << "error. n>m. try again" << endl;
+			fl = true;
+		}
+		else {
+			a = a2;
+			b = b2;
+		}
+	}
 	cout << "===============================" << endl;
 	for (int i = a; i <= b; i++) {
 		string o = to_string(i);

@@ -22,15 +22,20 @@ int section(int k) {
 
 int spin() {
 	cout << "spinners" << " 1)" << endl;
-	cout << "write a,b,c (price base, price lopasti, max price)" << endl;
-	double a = getDouble();
-	double b = getDouble();
-	double c = getDouble();
-	if (a > c) {
-		cout << "error" << endl;
-		return 0;
+	bool fl = true;
+	double a, b, c;
+	while (fl) {
+		fl = false;
+		cout << "write a,b,c (price base, price lopasti, max price)" << endl;
+		a = getDouble();
+		b = getDouble();
+		c = getDouble();
+		if (a > c) {
+			cout << "error. try again" << endl;
+			fl = true;
+		}
 	}
-	cout << int((c - a) / b) << endl;
+	cout << "ans: " << int((c - a) / b) << endl;
 
 	cout << "2) " << endl << "write m " << endl;
 	double m = getDouble();
@@ -45,7 +50,8 @@ int spin() {
 
 	cout << "3) " << endl << "write n,m" << endl;
 	int n,m2;
-	cin >> m2 >> n;
+	m2 = getInt();
+	n = getInt();
 	double ans_x = 0;
 	double ans_y = 0;
 	for (int x = 0; x < n; x++) {
@@ -58,11 +64,11 @@ int spin() {
 
 	cout << "4) " << endl << "write n" << endl;
 	int count[9] = { 0 };
-	cin >> n;
+	n = getInt();
 	cout << "write numbers of free places" << endl;
 	for (int i = 0; i < n; i++) {
 		int f;
-		cin >> f;
+		f = getInt();
 		count[section(f)]+=1;
 	}
 	int ans = 0;
@@ -77,11 +83,20 @@ int spin() {
 			curr = 0;
 		}
 	}
-	cout << ans << endl;
+	cout << "ans: " << ans << endl;
 
-	cout << "5) " << endl << "write n,k" << endl;
+	cout << "5) ";
 	long long n2, k;
-	cin >> n2 >> k;
+	fl = true;
+	while (fl) {
+		fl = false;
+		cout << endl << "write n,k" << endl;
+		cin >> n2 >> k;
+		if (k>n2) {
+			cout << "error.try again";
+			fl = true;
+		}
+	}
 	multiset<long long> s;
 	s.insert(n2);
 	long long ans1, ans2 = 0;
